@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Computing - UDLA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fafbfc;
+            color: #2c3e50;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%);
+            color: #2c3e50;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #c10230;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23c10230" opacity="0.05"><path d="M0,20 Q250,80 500,20 T1000,20 V100 H0 Z"/></svg>') repeat-x;
+            background-size: 1000px 100px;
+            animation: wave 25s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1000px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .udla-brand {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            color: #c10230;
+            text-shadow: 2px 2px 8px rgba(193, 2, 48, 0.1);
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+            color: #495057;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #6c757d;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: #ffffff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 25px 45px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            max-width: 220px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            color: #c10230;
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c10230, #e91e63);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .tab-btn.active::after {
+            width: 80%;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #f8f9fa;
+            color: #495057;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .service-section {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .service-section.active {
+            display: block;
+        }
+
+        .service-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+            border: 1px solid #e9ecef;
+        }
+
+        .service-icon {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            display: block;
+            filter: grayscale(20%);
+        }
+
+        .service-title {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #c10230;
+            text-shadow: 1px 1px 3px rgba(193, 2, 48, 0.1);
+        }
+
+        .service-acronym {
+            font-size: 1.3rem;
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .info-panel {
+            background: #ffffff;
+            padding: 45px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .info-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), rgba(193, 2, 48, 0.6));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .info-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .info-panel h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .info-panel p {
+            color: #495057;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            color: #495057;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .feature-item::before {
+            content: '●';
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-right: 12px;
+        }
+
+        /* Pizza Analogy Card */
+        .pizza-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 35px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .pizza-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-color: rgba(193, 2, 48, 0.2);
+        }
+
+        .pizza-card::before {
+            content: '🍕';
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 3.5rem;
+            opacity: 0.15;
+            filter: grayscale(50%);
+        }
+
+        .pizza-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #c10230;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pizza-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #495057;
+            font-weight: 400;
+        }
+
+        .pizza-description strong {
+            color: #c10230;
+            font-weight: 600;
+        }
+
+        /* Cost Box */
+        .cost-box {
+            background: linear-gradient(135deg, #c10230, #e91e63);
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 25px;
+            box-shadow: 0 8px 25px rgba(193, 2, 48, 0.25);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cost-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(193, 2, 48, 0.35);
+        }
+
+        .cost-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .cost-period {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Color Schemes */
+        .iaas-section { --accent-color: #c10230; }
+        .paas-section { --accent-color: #6c757d; }
+        .saas-section { --accent-color: #495057; }
+
+        /* Comparison Table */
+        .comparison-section {
+            margin-top: 0;
+            background: #ffffff;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .comparison-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            color: #c10230;
+            font-weight: 600;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #c10230, #e91e63);
+            color: #ffffff;
+            padding: 25px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #f1f3f4;
+            vertical-align: middle;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #fff5f5;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: left;
+            background: #ffffff;
+        }
+
+        /* Visual Icons */
+        .visual-comparison {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            border: 1px solid #e9ecef;
+        }
+
+        .comparison-item {
+            text-align: center;
+            flex: 1;
+            padding: 25px;
+            position: relative;
+        }
+
+        .comparison-item .icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: grayscale(30%);
+        }
+
+        .comparison-item .label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .comparison-item .description {
+            font-size: 0.95rem;
+            color: #6c757d;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #ffffff;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer-brand {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #c10230;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin: 8px 0;
+        }
+
+        .footer em {
+            color: #c10230;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .udla-brand {
+                font-size: 2.2rem;
+            }
+            
+            .tab-container {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                max-width: 100%;
+                padding: 20px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .visual-comparison {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .main-content,
+            .comparison-section {
+                padding: 40px 20px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #c10230, #e91e63);
+            z-index: 1001;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(193, 2, 48, 0.3);
+        }
+
+        /* Enhanced Hover Effects */
+        .service-header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.1);
+        }
+
+        /* Red Accent Highlights */
+        .highlight {
+            color: #c10230;
+            font-weight: 600;
+        }
+
+        .red-border {
+            border-left: 4px solid #c10230;
+            padding-left: 15px;
+        }
+
+        /* Subtle animations */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="udla-brand floating">UDLA</div>
+            <h1 class="hero-title">Cloud Computing</h1>
+            <p class="hero-subtitle">Descubre los servicios en la nube: <span class="highlight">IaaS, PaaS y SaaS</span> explicados de forma sencilla</p>
+        </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="iaas">IaaS</button>
+            <button class="tab-btn" data-tab="paas">PaaS</button>
+            <button class="tab-btn" data-tab="saas">SaaS</button>
+            <button class="tab-btn" data-tab="comparison">Comparación</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- IaaS Section -->
+        <section id="iaas" class="service-section iaas-section active">
+            <div class="service-header">
+                <span class="service-icon">🖥️</span>
+                <h2 class="service-title">IaaS</h2>
+                <p class="service-acronym">Infrastructure as a Service</p>
+                <p class="red-border">Alquilas la infraestructura, pero <span class="highlight">tú gestionas todo el software</span></p>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-panel">
+                    <h3>¿Qué es IaaS?</h3>
+                    <p>Rentas servidores virtuales, almacenamiento y red de un proveedor cloud, pero eres responsable de instalar y mantener el sistema operativo, aplicaciones y todo el software.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">Control total del OS</div>
+                        <div class="feature-item">Configuración manual</div>
+                        <div class="feature-item">Máxima flexibilidad</div>
+                        <div class="feature-item">Escalabilidad manual</div>
+                        <div class="feature-item">Actualizaciones manuales</div>
+                        <div class="feature-item">Máximo control</div>
+                    </div>
+
+                    <div class="cost-box">
+                        <div class="cost-amount">$15-100</div>
+                        <div class="cost-period">por mes / VM básica</div>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <h4 class="pizza-title">Analogía de la Pizza</h4>
+                    <p class="pizza-description">
+                        Es como <strong>rentar una cocina comercial equipada</strong>. 
+                        El local ya tiene hornos industriales, herramientas y servicios básicos conectados, 
+                        pero tú tienes que <strong>comprar todos los ingredientes, hacer la masa desde cero, 
+                        cocinar la pizza y limpiar</strong> todo cuando termines. Control total, pero trabajo total.
+                    </p>
+                </div>
+            </div>
+
+            <div class="visual-comparison">
+                <div class="comparison-item">
+                    <span class="icon">⏰</span>
+                    <div class="label">Tiempo Setup</div>
+                    <div class="description">30-60 minutos de configuración manual completa</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">🎛️</span>
+                    <div class="label">Control</div>
+                    <div class="description">Control total sobre infraestructura y software</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">🔧</span>
+                    <div class="label">Mantenimiento</div>
+                    <div class="description">Responsabilidad 100% del usuario</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PaaS Section -->
+        <section id="paas" class="service-section paas-section">
+            <div class="service-header">
+                <span class="service-icon">🔧</span>
+                <h2 class="service-title">PaaS</h2>
+                <p class="service-acronym">Platform as a Service</p>
+                <p class="red-border">La plataforma está lista, <span class="highlight">solo subes tu código</span></p>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-panel">
+                    <h3>¿Qué es PaaS?</h3>
+                    <p>El proveedor gestiona la infraestructura Y la plataforma de desarrollo. Tú solo te enfocas en desarrollar y desplegar tu aplicación sin preocuparte por servidores.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">Plataforma preconfigurada</div>
+                        <div class="feature-item">Deploy automático</div>
+                        <div class="feature-item">Escalado automático</div>
+                        <div class="feature-item">Actualizaciones incluidas</div>
+                        <div class="feature-item">Focus en desarrollo</div>
+                        <div class="feature-item">Múltiples lenguajes</div>
+                    </div>
+
+                    <div class="cost-box">
+                        <div class="cost-amount">$0-50</div>
+                        <div class="cost-period">por mes / App Service</div>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <h4 class="pizza-title">Analogía de la Pizza</h4>
+                    <p class="pizza-description">
+                        Es como ir a una <strong>pizzería donde ya tienen la masa y salsa preparadas</strong>. 
+                        El chef, los hornos, la cocina, todo está listo. 
+                        Tú solo eliges los ingredientes <strong>(pepperoni, champiñones, extra queso)</strong>, 
+                        ellos se encargan de armarla, cocinarla y servirla. Solo esperas 15 minutos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="visual-comparison">
+                <div class="comparison-item">
+                    <span class="icon">⚡</span>
+                    <div class="label">Tiempo Setup</div>
+                    <div class="description">2-5 minutos de despliegue completamente automático</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">⚖️</span>
+                    <div class="label">Control</div>
+                    <div class="description">Control balanceado sobre aplicación únicamente</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">🤝</span>
+                    <div class="label">Mantenimiento</div>
+                    <div class="description">Responsabilidad compartida con el proveedor</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SaaS Section -->
+        <section id="saas" class="service-section saas-section">
+            <div class="service-header">
+                <span class="service-icon">💼</span>
+                <h2 class="service-title">SaaS</h2>
+                <p class="service-acronym">Software as a Service</p>
+                <p class="red-border">Software completo, <span class="highlight">solo abre y usa</span></p>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-panel">
+                    <h3>¿Qué es SaaS?</h3>
+                    <p>La aplicación completa está lista para usar a través del navegador. No instalas nada, no configuras nada, solo creas una cuenta y empiezas a trabajar inmediatamente.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">Acceso inmediato</div>
+                        <div class="feature-item">Sin instalación</div>
+                        <div class="feature-item">Actualizaciones automáticas</div>
+                        <div class="feature-item">Colaboración integrada</div>
+                        <div class="feature-item">Multi-dispositivo</div>
+                        <div class="feature-item">Backup incluido</div>
+                    </div>
+
+                    <div class="cost-box">
+                        <div class="cost-amount">$6-22</div>
+                        <div class="cost-period">por mes / usuario</div>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <h4 class="pizza-title">Analogía de la Pizza</h4>
+                    <p class="pizza-description">
+                        Es como <strong>pedir pizza a domicilio</strong>. 
+                        Abres la app de Domino's o Pizza Hut en tu teléfono, navegas el menú, 
+                        eliges tu pizza favorita, pagas con un click, 
+                        y en 30 minutos llega <strong>perfecta y caliente a tu casa</strong>. 
+                        Solo comes y disfrutas. ¡Cero esfuerzo, máximo resultado!
+                    </p>
+                </div>
+            </div>
+
+            <div class="visual-comparison">
+                <div class="comparison-item">
+                    <span class="icon">🚀</span>
+                    <div class="label">Tiempo Setup</div>
+                    <div class="description">Acceso inmediato, solo registro de cuenta</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">🎯</span>
+                    <div class="label">Control</div>
+                    <div class="description">Control limitado, enfoque total en el uso</div>
+                </div>
+                <div class="comparison-item">
+                    <span class="icon">☁️</span>
+                    <div class="label">Mantenimiento</div>
+                    <div class="description">Cero mantenimiento, todo automático</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section id="comparison" class="service-section">
+            <div class="comparison-section">
+                <h2 class="comparison-title">📊 Comparación Completa</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>🖥️ IaaS</th>
+                            <th>🔧 PaaS</th>
+                            <th>💼 SaaS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tiempo de Setup</strong></td>
+                            <td>30-60 minutos</td>
+                            <td>2-5 minutos</td>
+                            <td>Inmediato</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Control del Usuario</strong></td>
+                            <td>Total</td>
+                            <td>Medio</td>
+                            <td>Limitado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Responsabilidad</strong></td>
+                            <td>Alta</td>
+                            <td>Media</td>
+                            <td>Mínima</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Escalabilidad</strong></td>
+                            <td>Manual</td>
+                            <td>Automática</td>
+                            <td>Transparente</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mantenimiento</strong></td>
+                            <td>Usuario 100%</td>
+                            <td>Compartido</td>
+                            <td>Proveedor 100%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo Inicial</strong></td>
+                            <td>Alto</td>
+                            <td>Bajo</td>
+                            <td>Muy bajo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personalización</strong></td>
+                            <td>Total</td>
+                            <td>Limitada</td>
+                            <td>Mínima</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mejor Para</strong></td>
+                            <td>Control total y personalización</td>
+                            <td>Desarrollo ágil de aplicaciones</td>
+                            <td>Uso inmediato y colaboración</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplos Populares</strong></td>
+                            <td>Azure VMs, AWS EC2</td>
+                            <td>Azure App Service, Heroku</td>
+                            <td>Office 365, Gmail, Netflix</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">UDLA</div>
+        <p>Universidad de Las Américas - Facultad de Ingeniería</p>
+        <p>Cloud Computing: IaaS, PaaS y SaaS - Demostración Práctica</p>
+        <p><em>Transformando la educación tecnológica del Ecuador</em></p>
+    </footer>
+
+    <script>
+        // Tab Navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.service-section');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.dataset.tab;
+                
+                // Remove active class from all
+                tabBtns.forEach(b => b.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked
+                btn.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+
+                // Smooth scroll to top of content
+                document.querySelector('.main-content').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+
+        // Enhanced Loading Animation
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('.service-header, .info-panel, .pizza-card, .visual-comparison');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Enhanced Interactions
+        const infoPanels = document.querySelectorAll('.info-panel');
+        infoPanels.forEach(panel => {
+            panel.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.boxShadow = '0 20px 50px rgba(0,0,0,0.15)';
+            });
+            
+            panel.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 8px 30px rgba(0,0,0,0.08)';
+            });
+        });
+
+        // Pizza cards hover effect
+        const pizzaCards = document.querySelectorAll('.pizza-card');
+        pizzaCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) rotate(1deg)';
+                this.style.boxShadow = '0 20px 50px rgba(193, 2, 48, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotate(0deg)';
+                this.style.boxShadow = '0 8px 30px rgba(0,0,0,0.08)';
+            });
+        });
+
+        // Cost box click interaction
+        const costBoxes = document.querySelectorAll('.cost-box');
+        costBoxes.forEach(box => {
+            box.addEventListener('click', function() {
+                const service = this.closest('.service-section').id;
+                let message = '';
+                
+                switch(service) {
+                    case 'iaas':
+                        message = '🖥️ IaaS: Ideal para empresas que necesitan control total sobre su infraestructura.\n\n💰 Costo incluye: VM, almacenamiento, red, pero excluye licencias de software y soporte técnico.\n\n📈 Escalabilidad: Manual, requiere planificación.';
+                        break;
+                    case 'paas':
+                        message = '🔧 PaaS: Perfecto para desarrollo ágil y equipos que quieren enfocarse en código.\n\n💰 Costo incluye: Plataforma, runtime, auto-scaling, monitoreo básico.\n\n📈 Escalabilidad: Automática según demanda.';
+                        break;
+                    case 'saas':
+                        message = '💼 SaaS: Mejor para uso inmediato y colaboración empresarial.\n\n💰 Costo incluye: Software completo, actualizaciones, soporte, backup, seguridad.\n\n📈 Escalabilidad: Transparente, solo pagas por usuarios activos.';
+                        break;
+                }
+                
+                alert(message);
+                
+                // Visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            const currentTab = document.querySelector('.tab-btn.active');
+            const allTabs = Array.from(tabBtns);
+            const currentIndex = allTabs.indexOf(currentTab);
+            
+            if (e.key === 'ArrowRight' && currentIndex < allTabs.length - 1) {
+                allTabs[currentIndex + 1].click();
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                allTabs[currentIndex - 1].click();
+                e.preventDefault();
+            }
+        });
+
+        // Table hover effects
+        const tableRows = document.querySelectorAll('.comparison-table tr');
+        tableRows.forEach((row, index) => {
+            if (index > 0) { // Skip header
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#fff0f0';
+                    this.style.borderLeft = '4px solid #c10230';
+                    this.style.transition = 'all 0.2s ease';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = index % 2 === 0 ? '#f8f9fa' : '#ffffff';
+                    this.style.borderLeft = 'none';
+                });
+            }
+        });
+
+        // Service header animations
+        const serviceHeaders = document.querySelectorAll('.service-header');
+        serviceHeaders.forEach(header => {
+            header.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.service-icon');
+                icon.style.transform = 'scale(1.1) rotate(10deg)';
+                icon.style.transition = 'all 0.3s ease';
+            });
+            
+            header.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.service-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Auto-play demo (optional - commented out)
+        /*
+        let autoPlayInterval;
+        const startAutoPlay = () => {
+            let currentIndex = 0;
+            autoPlayInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % tabBtns.length;
+                tabBtns[currentIndex].click();
+            }, 10000); // Change every 10 seconds
+        };
+
+        const stopAutoPlay = () => {
+            clearInterval(autoPlayInterval);
+        };
+
+        // Uncomment to enable auto-play
+        // setTimeout(startAutoPlay, 5000);
+        */
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe visual comparison items
+        document.querySelectorAll('.comparison-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'all 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Add current time display
+        const updateTime = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-EC', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Add time to hero section if desired
+            const heroContent = document.querySelector('.hero-content');
+            let timeDisplay = heroContent.querySelector('.time-display');
+            
+            if (!timeDisplay) {
+                timeDisplay = document.createElement('div');
+                timeDisplay.className = 'time-display';
+                timeDisplay.style.cssText = `
+                    position: absolute; 
+                    top: 20px; 
+                    right: 20px; 
+                    font-size: 0.9rem; 
+                    opacity: 0.7;
+                    color: #6c757d;
+                `;
+                document.querySelector('.hero-section').appendChild(timeDisplay);
+            }
+            
+            timeDisplay.textContent = `Última actualización: ${timeString}`;
+        };
+
+        updateTime();
+        setInterval(updateTime, 60000); // Update every minute
+
+        // Initialize tooltips for features
+        const featureItems = document.querySelectorAll('.feature-item');
+        featureItems.forEach(item => {
+            const tooltips = {
+                'Control total del OS': 'Puedes instalar cualquier sistema operativo y software',
+                'Configuración manual': 'Debes configurar todo desde cero',
+                'Plataforma preconfigurada': 'Todo el entorno de desarrollo ya está listo',
+                'Deploy automático': 'Solo subes tu código y se despliega automáticamente',
+                'Acceso inmediato': 'No necesitas instalar nada, funciona desde el navegador',
+                'Sin instalación': 'Todo funciona en la nube, cero downloads'
+            };
+            
+            const tooltip = tooltips[item.textContent];
+            if (tooltip) {
+                item.setAttribute('title', tooltip);
+                item.style.cursor = 'help';
+            }
+        });
+
+        console.log('🚀 UDLA Cloud Computing Demo loaded successfully!');
+        console.log('📊 Navegación: Usa las flechas ← → para cambiar entre secciones');
+        console.log('🖱️ Interactividad: Hover sobre elementos y click en costos para más info');
+    </script>
+</body>
+</html>
